@@ -20,11 +20,8 @@ def pageRankLinear(A, alpha, v):
             if A[i][k] != 0:
                 outdegree[i] += A[i][k]
         for j in range(len(A[0])):
-            P[i][j] = A[j][i] / outdegree[i]
-    newA = np.matmul(np.transpose(np.identity(len(A)) - alpha * P), A/np.linalg.norm(A))
-    B = v
-    return np.linalg.solve(newA, B)
-
+            P[i][j] = A[i][j] / outdegree[i]
+    return np.linalg.solve(np.transpose(np.identity(len(A)) - alpha * P), (1-alpha)*v)
 
 
 def pageRankPower(A, alpha, v):
@@ -46,4 +43,4 @@ if __name__ == '__main__':
     adj = np.genfromtxt('Adjacency_matrix.csv', delimiter=',')
     pers = np.genfromtxt('VecteurPersonnalisation_Groupe11.csv', delimiter=',')
     print(pageRankLinear(adj, 0.9, pers))
-    #print(sum(pageRankLinear(adj, 0.9, pers)))
+    # print(sum(pageRankLinear(adj, 0.9, pers)))
