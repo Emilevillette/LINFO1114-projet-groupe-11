@@ -53,9 +53,7 @@ def pageRankPower(A, alpha, v):
         for j in range(len(A[0])):
             P[i][j] = A[i][j] / outdegree[i]
 
-
     # Get the Google matrix (transposed to apply power method)
-    #print(alpha * P + (1 - alpha) * np.ones(len(P)) * np.transpose(v))
     G = np.transpose(alpha * P + (1 - alpha) * np.ones(len(P)) * np.transpose(v))
 
     # Copy to determine when to stop iterating
@@ -75,9 +73,9 @@ def pageRankPower(A, alpha, v):
             else:
                 stop_loop = False
                 break
-        #print(f"OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO {cnt}")
-        #np.savetxt(f"foo{cnt}.xslx", x, delimiter="    ")
-        #print(x)
+        # print(f"OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO {cnt}")
+        # np.savetxt(f"foo{cnt}.xslx", x, delimiter="    ")
+        # print(x)
         # Replace temp_x with new x
         temp_x = np.copy(x)
         cnt += 1
@@ -85,6 +83,7 @@ def pageRankPower(A, alpha, v):
 
 
 if __name__ == '__main__':
+    # Main method as asked in the instructions (alpha = 0.9)
     adj = np.genfromtxt('Adjacency_matrix.csv', delimiter=',')
     pers = np.genfromtxt('VecteurPersonnalisation_Groupe11.csv', delimiter=',')
     print(pageRankLinear(adj, 0.9, pers))
