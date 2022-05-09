@@ -23,9 +23,8 @@ def pageRankLinear(A, alpha, v):
                 outdegree[i] += A[i][k]
         for j in range(len(A[0])):
             P[i][j] = A[i][j] / outdegree[i]
-
     # solve the linear system from slide 144 of chapter 10 (see Moodle, author: Marco Saerens)
-    return np.linalg.solve(np.transpose(np.identity(len(A)) - alpha * P), (1 - alpha) * v)
+    return np.array(np.linalg.solve(np.transpose(np.identity(len(A)) - alpha * P), (1 - alpha) * v))
 
 
 def pageRankPower(A, alpha, v):
@@ -53,6 +52,7 @@ def pageRankPower(A, alpha, v):
             P[i][j] = A[i][j] / outdegree[i]
 
     # Get the Google matrix
+    print(alpha * P + (1 - alpha) * np.ones(len(P)) * np.transpose(v))
     G = np.transpose(alpha * P + (1 - alpha) * np.ones(len(P)) * np.transpose(v))
 
     # Copy to determine when to stop iterating
@@ -64,6 +64,7 @@ def pageRankPower(A, alpha, v):
         x = np.matmul(G, x)
         for i in range(len(x)):
             # We could add a tolerance parameter to the function (not specified in the instructions so not added here)
+            # We believe 10e-6 is a reasonable tolerance factor
             # Stops iterating when the difference between the previous matrix and the current is below a given threshold
             if abs(x[i] - temp_x[i]) < 0.000001:
                 stop_loop = True
@@ -72,7 +73,7 @@ def pageRankPower(A, alpha, v):
                 break
         # Replace temp_x with new x
         temp_x = np.copy(x)
-    return x
+    return np.array(x)
 
 
 if __name__ == '__main__':
