@@ -53,7 +53,8 @@ def pageRankPower(A, alpha, v):
         for j in range(len(A[0])):
             P[i][j] = A[i][j] / outdegree[i]
 
-    # Get the Google matrix
+    # Get the Google matrix (transposed to apply power method)
+    print(alpha * P + (1 - alpha) * np.ones(len(P)) * np.transpose(v))
     G = np.transpose(alpha * P + (1 - alpha) * np.ones(len(P)) * np.transpose(v))
 
     # Copy to determine when to stop iterating
