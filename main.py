@@ -23,6 +23,8 @@ def pageRankLinear(A, alpha, v):
                 outdegree[i] += A[i][k]
         for j in range(len(A[0])):
             P[i][j] = A[i][j] / outdegree[i]
+    print(np.transpose(np.identity(len(A)) - alpha * P))
+    print((1 - alpha) * v)
     # solve the linear system from slide 144 of chapter 10 (see Moodle, author: Marco Saerens)
     return np.array(np.linalg.solve(np.transpose(np.identity(len(A)) - alpha * P), (1 - alpha) * v))
 
@@ -53,7 +55,7 @@ def pageRankPower(A, alpha, v):
 
 
     # Get the Google matrix (transposed to apply power method)
-    print(alpha * P + (1 - alpha) * np.ones(len(P)) * np.transpose(v))
+    #print(alpha * P + (1 - alpha) * np.ones(len(P)) * np.transpose(v))
     G = np.transpose(alpha * P + (1 - alpha) * np.ones(len(P)) * np.transpose(v))
 
     # Copy to determine when to stop iterating
@@ -61,6 +63,7 @@ def pageRankPower(A, alpha, v):
 
     # Iterate on the left eigenvector until it converges
     stop_loop = False
+    cnt = 0
     while not stop_loop:
         x = np.matmul(G, x)
         for i in range(len(x)):
@@ -72,8 +75,12 @@ def pageRankPower(A, alpha, v):
             else:
                 stop_loop = False
                 break
+        #print(f"OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO {cnt}")
+        #np.savetxt(f"foo{cnt}.xslx", x, delimiter="    ")
+        #print(x)
         # Replace temp_x with new x
         temp_x = np.copy(x)
+        cnt += 1
     return np.array(x)
 
 
