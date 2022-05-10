@@ -14,7 +14,6 @@ def pageRankLinear(A, alpha, v):
     :rtype: np.array
     """
     outdegree = np.zeros(len(A))
-
     # Determine the transition probabilities matrix from a and the out-degree of a
     P = np.zeros(shape=(len(A), len(A[0])))
     for i in range(len(A)):
@@ -23,8 +22,6 @@ def pageRankLinear(A, alpha, v):
                 outdegree[i] += A[i][k]
         for j in range(len(A[0])):
             P[i][j] = A[i][j] / outdegree[i]
-    print(np.transpose(np.identity(len(A)) - alpha * P))
-    print((1 - alpha) * v)
     # solve the linear system from slide 144 of chapter 10 (see Moodle, author: Marco Saerens)
     return np.array(np.linalg.solve(np.transpose(np.identity(len(A)) - alpha * P), (1 - alpha) * v))
 
@@ -61,7 +58,6 @@ def pageRankPower(A, alpha, v):
 
     # Iterate on the left eigenvector until it converges
     stop_loop = False
-    cnt = 0
     while not stop_loop:
         x = np.matmul(G, x)
         for i in range(len(x)):
@@ -71,14 +67,11 @@ def pageRankPower(A, alpha, v):
             if abs(x[i] - temp_x[i]) < 0.000001:
                 stop_loop = True
             else:
+                # One element does not converge, exit loop
                 stop_loop = False
                 break
-        # print(f"OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO {cnt}")
-        # np.savetxt(f"foo{cnt}.xslx", x, delimiter="    ")
-        # print(x)
         # Replace temp_x with new x
         temp_x = np.copy(x)
-        cnt += 1
     return np.array(x)
 
 
