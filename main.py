@@ -75,6 +75,13 @@ def pageRankPower(A, alpha, v):
     return np.array(x)
 
 
+def main():
+    adj = np.genfromtxt('Adjacency_matrix.csv', delimiter=',')
+    pers = np.genfromtxt('VecteurPersonnalisation_Groupe11.csv', delimiter=',')
+    print(pageRankLinear(adj, 0.9, pers))
+    print(pageRankPower(adj, 0.9, pers))
+
+
 if __name__ == '__main__':
     # Main method as asked in the instructions (alpha = 0.9)
     adj = np.genfromtxt('Adjacency_matrix.csv', delimiter=',')
